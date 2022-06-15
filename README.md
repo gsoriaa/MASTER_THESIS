@@ -17,5 +17,3 @@ En el primer paso del análisis, se ejecuta el script 1.1 desde el software de R
 * *Figura 5A* (script 1.2) 
 * *Figura 14* (script 1.1)
 * *Figura Suplementaria 1* (script 1.1)
-
-No se proporcionan los ficheros de datos dado que pertenecen al laboratorio receptor (además de por limitación de espacio).
