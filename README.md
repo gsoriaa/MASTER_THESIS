@@ -1,7 +1,8 @@
 # TRABAJO FIN DE MÁSTER -- Gonzalo Soria
 Repositorio conteniendo los **scripts** empleados en el análisis llevado a cabo durante el TFM realizado por Gonzalo Soria.
 
-**DADO QUE LOS DATOS SON ACCESIBLES DE FORMA PÚBLICA, NO SE PUEDEN SUBIR FICHEROS DEL ANÁLISIS, DADO QUE TANTO LOS DATOS COMO LOS RESULTADOS PERTENECEN AL LABORATORIO RECEPTOR**
+**DADO QUE LOS DATOS SON ACCESIBLES DE FORMA PÚBLICA EN *GITHUB*, NO SE PUEDEN SUBIR FICHEROS DEL ANÁLISIS: TANTO LOS DATOS COMO LOS RESULTADOS PERTENECEN AL LABORATORIO RECEPTOR**
+
 El análisis comienza con 8 ficheros de UMIs delimitados por tabulador (AB10171-8.txt), un fichero de metadatos conteniendo la anotación por cada célula y dos ficheros de metacell que serían el resultado del PIC (con la anotación y mc-scores por separado de singletes y dobletes).
 
 ## PASO 1: Generación de los ficheros iniciales
