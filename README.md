@@ -1,4 +1,4 @@
-# MASTER_THESIS
+# TRABAJO FIN DE MÁSTER -- Gonzalo Soria
 Repositorio conteniendo los **scripts** y algunos de los **ficheros generados** en el análisis llevado a cabo durante el TFM realizado por Gonzalo Soria.
 
 El análisis comienza con 8 ficheros de UMIs delimitados por tabulador (AB10171-8.txt), un fichero de metadatos conteniendo la anotación por cada células y dos ficheros de metacell que serían el resultado del PIC (con la anotación y mc-scores por separado de singletes y dobletes).
