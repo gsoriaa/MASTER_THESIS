@@ -1,0 +1,4 @@
+sample	matrix	metadata
+AB10172	trimmed/counts/AB10172_no_Tcells.txt	trimmed/metadata/AB10172_no_Tcells_metadata.txt
+AB10175	trimmed/counts/AB10175_no_Tcells.txt	trimmed/metadata/AB10175_no_Tcells_metadata.txt
+AB10176	trimmed/counts/AB10176_no_Tcells.txt	trimmed/metadata/AB10176_no_Tcells_metadata.txt

@@ -1,0 +1,178 @@
+# Samples.tsv: path or URL to sample sheet (TSV format, columns: sample, condition, ...).
+samples: samples_AM.tsv
+
+# Units.tsv: path or URL to sequencing unit sheet (TSV format, 2 different formats.
+units: units_AM.tsv
+
+# input type: this variable is used to specify the input files nature ("matrix" or "fastq"). 
+input_type: "matrix"
+
+# technology:
+# "10x", "Drop-seq" or "custom" if input_type is fastq.
+# "10x" or "standard" if input_type is matrix.
+technology: "standard"  
+
+# technology_version: only if using 10x technology (fastq)
+technology_version: "v3"
+
+# Output and log files paths
+outdir: "out_AMs"
+logdir: "log_AMs"
+
+# Graphics availability.
+graphics: True
+
+# keeping the same random seed allows the programs that use it to generate the same results
+random_seed:  4848
+
+# gene case format: uppercase (TP53), lowercase (tp53), and titlecase (Tp53)
+case: "uppercase"
+
+# If there are to many samples, R might yield an error when writing count data in tsv files, in that case set as False.
+# Possible values: True/False
+write_table: False
+
+# Perform the analysis using only single samples (for merged or integrated)
+single_samples: TRUE
+
+# genomic reference sequences and annotations
+ref:
+    annotation: "/my/annotation.gtf"
+    fasta: "/my/genome.fasta"
+    idx: "/my/genome_idx" # STAR aligner index path (auto generated if not already present)
+
+# barcodes whitelist (10x only)
+whitelist: "/my/barcodes.txt"  
+
+
+parameters:
+    seurat_qc: # step 1: Examine your results with the most commonly used single-cell QC metrics.
+        min_cells_per_gene: 3
+    seurat_postqc: # step 2: implement your filters in order to get quality cells using the information gathered in step 1.
+        # NOTE: leave value empty to ignore limit
+        min_feat: 114 # minimum number of unique genes detected per cell
+        max_feat: 718 # maximum number of unique genes detected per cell
+        min_count: 197 # minimum number of counts per cell
+        max_count: 1773 # maximum number of counts per cell
+        mit_pct: 20 # minimum percentaje of reads mapping to the mitochondrial genome
+        ribo_pct: 40 # minimum percentaje of reads mapping to the ribosomal genome
+    seurat_filter: #[OPTIONAL] step 2.1: filter out cells based on positive or negative marker gene(s)
+        genes: # ["Lyz2", "Chil3", "Ear2", "Ctss", "Ccl6", "Laptm5"] #Filtro los marker genes que he sacado de BBROWSER (6 genes)--NO tiene sentido, elimino la PICdata
+        threshold: # 1 # expression level threshold (number of counts/cell)
+        filter_out: False # True: keep cells with expression higher than *threshold*. False: the opposite.
+    seurat_merge: #[OPTIONAL] step 2.5: merging all samples
+        enabled: True
+    seurat_normalization: # step 3: normalization and generation of jackstraw and elbow plots 
+        norm_type: "SCT" # normalization strategy ("SCT" or "standard")
+        variable_features: True # True: PCA calculated only using highly variable genes. False: PCA calculated using all genes. NOTE: in both cases, variable feature are calculated and stored in the seurat object. 
+        regress_out:
+            enabled: True # if True, regress out biological or technical effects stored in the metadata table of the Seurat object
+            vars_to_regress: "percent.mt" # vars_to_regress: some variables can be regressed out to minimize their effect on the samples. It needs to be written in a python list format (more than one variable).
+        regress_cell_cycle: False # if True, regress out the cell cycle effect (check out the cell cycle plot first)
+        regress_merge_effect: False # if True, regress out the differences between the merged samples.
+    seurat_integration: #[OPTIONAL] step 3B: integration (equivalent to the step 3 (normalization), but creates an integrated object)
+        enabled: False
+    seurat_find_clusters: # step 4: clustering of your data
+        principal_components: 10 # this number should be set based on the output of step 3 (normalization)
+        resolutions: [0.2, 0.4, 0.8, 1.2, 1.6] # the resolution value(s) will set the granularity of the clustering (typicaly between 0.4-1.2).
+        k_neighbors: 20 # number of neighbors (k) used to generate the SNN graph
+        batch_metadata: ["module","condition","group"] # Computes the Local Inverse Simpson’s Index (LISI) for all variables of interest. Specially recommended for measuring integration accuracy.
+    seurat_degs: # [OPTIONAL] step 5: marker and differentially expressed genes calculation
+        enabled: True
+        selected_cond: [0.2, ["module"]] # resolution or condition to be used in the downstream analysis. Resolutions can be written as follows: 0.2, 0.4... Conditions must be character vectors.
+        ranking: True # gene ranking for all the genes to perform as GSEA
+        test: "wilcox" # statistical test to use for the DE analysis (see Seurat's FindMarkers function options)
+    seurat_gs: #[OPTIONAL] step 6: gene set scoring will calculate the average expression levels of each specified regulatory program
+        enabled: False
+        geneset_collection: "/my/symbols.gmt" # geneset collections in GMT format to test
+        geneset_percentage: 0.2 # minimum ratio (expressed genes / total genes) for a geneset to be tested
+    slingshot: #[OPTIONAL] step 7: trajectory inference step
+        enabled: True
+        selected_res: 0.4 # resolution (number of clusters) taken from Seurat object to perform the trajectory analysis.
+        start_clus: False # cluster or clusters from where the curve or lineage start (optional)
+        end_clus: False # cluster or clusters where the curve or lineage end (optional)
+        n_var_genes: 1000 # top n variable genes selected to fit the model
+        n_plotted_genes: 50 # n top variable genes to plot in the heatmap
+    vision: #[OPTIONAL] step 8: cell and cluster functional analysis based on molecular signatures
+        enabled: False
+        geneset_collection: "/my/symbols.gmt" # geneset collections in GMT format to test
+        meta_columns: ["nCount_RNA", "nFeature_RNA", "percent.mt", "percent.ribo"] # metadata information to keep from the Seurat object
+        selected_res: 0.4 # resolution at which to select clusters to be added as metadata
+    velocyto: #[OPTIONAL] step 9: RNA velocity plots over single experiments samples.
+        enabled: False
+        selected_res: 0.4 # resolution (number of clusters) to represent in the velocity plot
+        downsampling:
+            enabled: False # cell downsampling (useful for samples with large number of cells)
+            n_cells: null # number of cells used to perform the downsampling
+    fastq_screen:
+        enabled: False
+    fastq_screen_indexes:
+        outdir: "res"
+    star: # these parameters are auto selected based on the technology and version specified above. Modify only if you know what you're doing.
+        10x:
+            v1:
+                "--soloType Droplet --soloFeatures Gene Velocyto --outFilterMultimapNmax 50 --winAnchorMultimapNmax 50 --alignEndsType EndToEnd --outReadsUnmapped Fastx --soloUMIlen 10  --soloCBlen 14 --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI nM AS CR UR CB UB GX GN sS sQ sM"
+            v2:
+                "--soloType Droplet --soloFeatures Gene Velocyto --outFilterMultimapNmax 50 --winAnchorMultimapNmax 50 --alignEndsType EndToEnd --outReadsUnmapped Fastx --soloUMIlen 10 --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI nM AS CR UR CB UB GX GN sS sQ sM"
+            v3:
+                "--soloType Droplet --soloFeatures Gene Velocyto --outFilterMultimapNmax 50 --winAnchorMultimapNmax 50 --alignEndsType EndToEnd --outReadsUnmapped Fastx --soloUMIlen 12 --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI nM AS CR UR CB UB GX GN sS sQ sM"
+        drop-seq:
+            "--soloType Droplet --soloFeatures Gene Velocyto --outFilterMultimapNmax 50 --winAnchorMultimapNmax 50 --alignEndsType EndToEnd --outReadsUnmapped Fastx --soloUMIlen 8 --soloCBlen 12 --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI nM AS CR UR CB UB GX GN sS sQ sM" 
+        custom:
+            "--soloType Droplet --soloFeatures Gene Velocyto --outFilterMultimapNmax 50 --winAnchorMultimapNmax 50 --alignEndsType EndToEnd --outReadsUnmapped Fastx --soloUMIlen N --soloCBlen N --outSAMtype BAM SortedByCoordinate --outSAMattributes NH HI nM AS CR UR CB UB GX GN sS sQ sM" 
+    multiqc: "--config res/config/multiqc_config.yaml"
+
+resources:
+    default:
+        threads: 1
+        mem: 8000
+        walltime: 480
+    merge:
+        mem: 32000
+    star_index:
+        threads: 8
+        mem: 64000
+    star:
+        threads: 8
+        mem: 64000
+    fastqc:
+        threads: 4
+    rseqc_junction_saturation:
+        mem: 8000
+    rseqc_readdup:
+        mem: 24000
+    seurat_qc:
+        mem: 3000
+    seurat_postqc:
+        mem: 4000
+    seurat_filter:
+        mem: 4000
+    seurat_merge:
+        mem: 16000
+    seurat_normalization:
+        threads: 4
+        mem: 16000
+    seurat_integration:
+        threads: 4
+        mem: 32000
+    seurat_find_clusters:
+        threads: 4
+        mem: 8000
+    seurat_degs:
+        threads: 4
+        mem: 64000
+    seurat_gs:
+        mem: 16000
+    slingshot:
+        mem: 8000
+    vision:
+        threads: 4
+        mem: 16000 
+    velocyto:
+        mem: 32000
+    fastq_screen_indexes:
+        threads: 8
+        outdir: "res"
+    fastq_screen:
+        threads: 8
+        disabled: true
