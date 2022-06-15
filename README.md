@@ -38,5 +38,4 @@ En el script 4.3b, se ejecuta cellphone desde el terminal de linux
 * Fichero con los genes tal y como pide cellphoneDB: *human-cellphone_genes-EMTp_x_AM.txt*
 
 ***Output 4.3b:***
-Se obtienen dos directorios de resultados, pero empleamos:
 * *out_subsampling*: Conteniendo entre otros *relevant_interactions.txt* con las 14 interacciones significativas.
