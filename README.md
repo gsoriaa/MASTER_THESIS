@@ -80,7 +80,7 @@ En el script 4.2 se realiza un filtrado de las interacciones obteniads en el an�
 A continuación, el fichero aquí generado se carga de nuevo en el script 4.1 para continuar con el análisis.
 
 ***Input***:
-* seurat data object: seurat_find-clusters.rds"
+* seurat data object: *seurat_find-clusters.rds*
 * Fichero *combined_res.tsv*
 * Fichero de datos de expresión de genes en *AMs* de Maria Casanova *et al.,* 2021: "./TRMs_cancer-Maria-data/SUPPLEMENTARY_TABLE_3-ALL_DATA.xlsx"
 * (Fichero *best_upstream_ligands.tsv* generado en el script 4.1 y que se requiere para el script 4.2)
@@ -95,14 +95,14 @@ A continuación, el fichero aquí generado se carga de nuevo en el script 4.1 pa
 
 **FIGURAS:**
 * *Figura 10A-D* (script 4.1)
-* *Figura 11B* (script 4.1)
+* *Figura 11C* (script 4.1)
 
 ### CellphoneDB Analysis:
 En el script 4.3a se generan los ficheros necesarios para ejecutar cellphoneDB desde R.
 En el script 4.3b, se ejecuta cellphone desde el terminal de linux
 
 ***Input 4.3a***: 
-* seurat data object: seurat_find-clusters.rds"
+* seurat data object: *seurat_find-clusters.rds*
 * Ficheros de genes no mitocondriales: *DEGs_PICs_AM_final_noMith.tsv* y *DEGs_EMTPICs_EMT_final_noMith.tsv*
 
 ***Output 4.3a e Input 4.3b***:
@@ -116,7 +116,7 @@ Se obtienen dos directorios de resultados, pero empleamos:
 ## PASO 5: PRIORIZACIÓN DE INTERACCIONES
 En el script 5, se analizan los resultados obtenidos y se lleva a cabo una priorización final de las interacciones obtenidas.
 
-*** Input:***
+***Input:***
 * Resultados de NicheNetR: *prioritized_tbl_oi_filtered_top.tsv*, *prioritized_tbl_oi-EMT_low.tsv*, *prioritized_tbl_oi-Singlets.tsv*
 * Firmas de D. Cook *et al.*, 2022: *EMP_conserved_signature.tsv* y *Malignant_cell_signature.tsv*
 * Resultados de CellphoneDB: *relevant_interactions.txt*
@@ -128,6 +128,5 @@ En el script 5, se analizan los resultados obtenidos y se lleva a cabo una prior
 * *Figura 11A-B*
 * *Figura 12A-B*
 * *Figura 13*
-* 
 
 
