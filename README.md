@@ -1,3 +1,6 @@
+# TRABAJO FIN DE MÁSTER -- Gonzalo Soria
+Repositorio conteniendo los **scripts** y algunos de los **ficheros generados** en el análisis llevado a cabo durante el TFM realizado por Gonzalo Soria.
+
 ## PASO 1: Generación de los ficheros iniciales
 En el primer paso del análisis, se ejecuta el script 1.1 desde el software de R (v. 4.2.0) para eliminar las células T de mi análisis, y generar una visión global de los datos iniciales proporcionados. Además, se divide el fichero de metadatos proporcionado inicialmente generando un fichero de metadatos por cada uno de los ficheros de datos iniciales. Esta división es necesaria para ejecutar Bollito en el **PASO 2**
 
