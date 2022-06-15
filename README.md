@@ -56,7 +56,7 @@ En el script 3.1, se extraen los *DEGs* empleados en mi análisis.
 En el script 3.2 se realiza el análisis de vías enriquecidas en estos *DEGs*.
 
 ***Input:***
-* seurat data object: seurat_find-clusters.rds"
+* seurat data object: *seurat_find-clusters.rds*
 * Firmas de D. Cook *et al.*, 2022: *EMP_conserved_signature.tsv* y *Malignant_cell_signature.tsv*
 
 ***Output:*** Se generan, entre otros, los siguientes ficheros:
