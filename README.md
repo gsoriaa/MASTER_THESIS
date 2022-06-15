@@ -114,7 +114,7 @@ Se obtienen dos directorios de resultados, pero empleamos:
 * *out_subsampling*: Conteniendo entre otros *relevant_interactions.txt* con las 14 interacciones significativas.
 
 ## PASO 5: PRIORIZACIÓN DE INTERACCIONES
-En el script 5, se analizan los resultados obtenidos y se lleva a cabo una priorización final de las interacciones obtenidas.
+En el script 5, se analizan los resultados obtenidos y se lleva a cabo una priorización final de las interacciones identificadas.
 
 ***Input:***
 * Resultados de NicheNetR: *prioritized_tbl_oi_filtered_top.tsv*, *prioritized_tbl_oi-EMT_low.tsv*, *prioritized_tbl_oi-Singlets.tsv*
