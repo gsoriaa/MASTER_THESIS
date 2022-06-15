@@ -2,7 +2,7 @@
 Repositorio conteniendo los **scripts** y algunos de los **ficheros generados** en el análisis llevado a cabo durante el TFM realizado por Gonzalo Soria.
 
 ## PASO 5: PRIORIZACIÓN DE INTERACCIONES
-En el script 5, se analizan los resultados obtenidos y se lleva a cabo una priorización final de las interacciones obtenidas.
+En el script 5, se analizan los resultados obtenidos y se lleva a cabo una priorización final de las interacciones identificadas.
 
 ***Input:***
 * Resultados de NicheNetR: *prioritized_tbl_oi_filtered_top.tsv*, *prioritized_tbl_oi-EMT_low.tsv*, *prioritized_tbl_oi-Singlets.tsv*
