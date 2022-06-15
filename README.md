@@ -12,8 +12,8 @@ En el primer paso del análisis, se ejecuta el script 1.1 desde el software de R
 * Ficheros de metacell (PIC-seq annotation): *PICs_metacell.txt ; singlets_metacell.txt*
 
 ***Output:***
-* *AB1017\[1-8\]\_noTcells.txt*
-* *AB1017\[1-8\]\_no_Tcells_metadata.txt*
+* *AB1017\[1-8\]\_no\_Tcells.txt*
+* *AB1017\[1-8\]\_no\_Tcells_metadata.txt*
 
 **FIGURAS:** 
 * *Figura 5A* (script 1.2) 
