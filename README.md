@@ -3,7 +3,7 @@ Repositorio conteniendo los **scripts** y algunos de los **ficheros generados** 
 
 El análisis comienza con 8 ficheros de UMIs delimitados por tabulador (AB10171-8.txt), un fichero de metadatos conteniendo la anotación por cada células y dos ficheros de metacell que serían el resultado del PIC (con la anotación y mc-scores por separado de singletes y dobletes).
 
-## PASO 1
+## PASO 1: Generación de los ficheros iniciales
 En el primer paso del análisis, se ejecuta el script 1.1 desde el software de R (v. 4.2.0) para eliminar las células T de mi análisis, y generar una visión global de los datos iniciales proporcionados. Además, se divide el fichero de metadatos proporcionado inicialmente generando un fichero de metadatos por cada uno de los ficheros de datos iniciales. Esta división es necesaria para ejecutar Bollito en el **PASO 2**
 
 ***Input:***
@@ -20,7 +20,7 @@ En el primer paso del análisis, se ejecuta el script 1.1 desde el software de R
 * *Figura 14* (script 1.1)
 * *Figura Suplementaria 1* (script 1.1)
 
-## PASO 2
+## PASO 2: Preprocesado y normalización de los datos
 En este segundo paso, se lleva a cabo el preprocesado de los datos por medio del software de Bollito. Se crea un entorno de conda que permite su ejecución.
 Dada la gran diferencia en cuanto a número de genes y moléculas detectadas entre los distintos tipos de elementos a analizar (AM vs. tumor vs. PIC), el filtrado se realiza en tres pasos por separado y luego se unifican los resultados.
 
@@ -47,7 +47,7 @@ Además, tal y como se indica en el script 2.1, el análisis se ejecuta en tres 
 * *Figura 7* (script 2.3)
 
 
-## PASO 3
+## PASO 3: Análisis del perfil transcripcional causado por la interacción
 Una vez normalizados los datos, se procede al análisis transcriptómico *per se*.
 Se emplea Seurat (V.4.0.0) de aquí en adelante para mí análisis.
 
@@ -73,19 +73,22 @@ En el script 3.2 se realiza el análisis de vías enriquecidas en estos *DEGs*.
 * *Figura 8A-D* (script 3.2)
 * *Figura 9* (script 3.2)
 
-## PASO 4
+## PASO 4: Análisis de interacción célula-célula
 ### NicheNetR Analysis: scripts 4.1 y 4.2
 En el script 4.1 se especifica la metodología a seguir para realizar el análisis empleando *NicheNetR* (v.1.0.0).
-En el script 4.2 se realiza un filtrado de los ligandos obtenidos en el análisis durante 4.1, que se filtran de acuerdo a su expresión en datos de *AM* generados en **Maria Casanova *et al.,* 2021**. Luego, el fichero aquí generado se carga de nuevo en el script 4.1 para continuar con el análisis.
+En el script 4.2 se realiza un filtrado de las interacciones obteniads en el análisis durante 4.1, que se filtran de acuerdo a la expresión de los ligandos identificados en datos de *AM* generados en **Maria Casanova *et al.,* 2021** para comprobar que estos ligandos tienen un mínimo de expresión en *AMs*. 
+A continuación, el fichero aquí generado se carga de nuevo en el script 4.1 para continuar con el análisis.
 
 ***Input***:
 * seurat data object: seurat_find-clusters.rds"
 * Fichero *combined_res.tsv*
 * Fichero de datos de expresión de genes en *AMs* de Maria Casanova *et al.,* 2021: "./TRMs_cancer-Maria-data/SUPPLEMENTARY_TABLE_3-ALL_DATA.xlsx"
+* (Fichero *best_upstream_ligands.tsv* generado en el script 4.1 y que se requiere para el script 4.2)
 * (Fichero *best_upstream_ligands_filtered.tsv* generado en el script 4.2 y que se requiere para continuar el script 4.1)
 
 ***Output***:
-* (Fichero *best_upstream_ligands.tsv* generado en el script 4.2 y que se requiere para continuar el script 4.1)
+* (Fichero *best_upstream_ligands.tsv* generado en el script 4.1 y que se requiere para el script 4.2)
+* * (Fichero *best_upstream_ligands_filtered.tsv* generado en el script 4.2 y que se requiere para continuar el script 4.1)
 * Fichero *prioritized_tbl_oi_filtered_top.tsv* conteniendo la información de las 66 interacciones de interés predichas para el nicho de *EMT*.
 * Fichero *prioritized_tbl_oi-EMT_low.tsv* conteniendo la información de las 95 interacciones predichas para el nicho pobre en *EMT*.
 * Fichero *prioritized_tbl_oi-Singlets.tsv* conteniendo la información de las 92 interacciones predichas para los singletes en lugar de dobletes.
@@ -110,8 +113,7 @@ En el script 4.3b, se ejecuta cellphone desde el terminal de linux
 Se obtienen dos directorios de resultados, pero empleamos:
 * *out_subsampling*: Conteniendo entre otros *relevant_interactions.txt* con las 14 interacciones significativas.
 
-## PASO 5
-### PRIORIZACIÓN DE INTERACCIONES
+## PASO 5: PRIORIZACIÓN DE INTERACCIONES
 En el script 5, se analizan los resultados obtenidos y se lleva a cabo una priorización final de las interacciones obtenidas.
 
 *** Input:***
