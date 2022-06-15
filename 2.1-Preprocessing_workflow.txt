@@ -1,0 +1,53 @@
+#### PREPROCESAMIENTO DE LOS DATOS POR BOLLITO
+## En primer lugar, para el empleo de bollito se requiere generar los ficheros
+## samples.tsv y units.tsv que permiten a la herramienta identificar dónde
+## está cada uno de los archivos necesarios para generar nuestro objeto de análisis.
+## 
+## Además, hay un tercer fichero config.yaml que define los parámetros del preprocesado.
+## Para la selección de los parámetros de fitrado, únicamente se personalizan los criterios
+## para el filtrado en base al número de moléculas/genes expresados en la célula. 
+## Los demás parámetros se conservan por defecto (se emplean de forma generalizada al 
+##  datos de single-cell) se establece que el límite viene definido por el valor de la 
+##  mediana, de modo que se filtranaquellas células donde el número de genes 
+##  expresados (n_features) sea 2.5 veces superior o inferior a la mediana o el número de
+##  moléculas expresadas (n_counts) sea 3 veces superior o inferior a la mediana
+##
+## Este filtrado de células se realiza por separado para cada tipo de fichero, 
+## por eso tenemos tres ficheros de cada, según sea AM, tumor o PIC
+# 
+#* La normalización se lleva a cabo por SCTransform
+#* el comando para correr bollito sería:
+# $ snakemake --use-conda -j 32
+
+####### EJECUCIÓN DE BOLLITO DESDE EL TERMINAL UNIX
+# descargamos el software de bollito en un entorno de conda
+## Se ejecutan los 3 por separado en el entorno de conda creado para bollito.
+## IMPORTANTE: cada vez, hay que renombrar el fichero config_*.yaml a config.yaml 
+## a emplear para ejecutarlo correctamente.
+#
+conda activate snakemake
+cp config_PIC.yaml config.yaml
+snakemake --use-conda -j 32 --until seurat_merge
+cp config_tumor.yaml config.yaml
+snakemake --use-conda -j 32 --until seurat_merge
+cp config_AM.yaml config.yaml
+snakemake --use-conda -j 32 --until seurat_merge
+## 
+#####
+## 
+## Luego, hago un merge de los tres ficheros post-qc.rds 
+## (cada uno en su directorio out_*/seurat/merged/3_clustering/ ),
+## sobreescribiendo el último post-qc.rds obtenido, para continuar 
+## con el proceso de análisis de bollito
+## 
+## ## Desde R: 
+## ****************************************
+## correr código de 2.2-Bollito_merge_RDS.R 
+## Seurat(v.3.2.3) *WARNING: LA v.4.0 no es compatible con snakemake, por lo que tenemos que instalar la v3 para crear este objeto seurat
+## ****************************************
+## Una vez generado el merge y guardado en ./out_AMs/seurat/merged/1_preprocessing/seurat_post-qc.rds
+# continuo con el run de bollito en mi entorno de conda
+##### * en mi caso, el AM es el último en ser analizado, por eso se sobreescribe el rds de este directorio
+
+snakemake --use-conda -j 32 --until seurat_find_clusters
+# MI OBJETO DE INTERÉS TRAS EL PREPROCESADO SE ENCUENTRA EN: ./out_AMs/seurat/merged/3_clustering/seurat_find-clusters.rds
