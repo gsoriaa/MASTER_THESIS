@@ -1,0 +1,10 @@
+#GNU
+##features must be uppercase
+awk '{ print toupper($0) }' counts_mtx/features.tsv > counts_mtx/features_2.tsv
+mv counts_mtx/features_2.tsv counts_mtx/features.tsv
+#
+conda activate cellphone
+cellphonedb method degs_analysis meta.tsv counts_mtx/ human-cellphone_genes-EMTp_x_AM.txt --counts-data hgnc_symbol --subsampling --subsampling-log true --output-path out_subsampling
+##
+## 14 interacciones identificadas con el método de subsampling
+###############################################
