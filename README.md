@@ -88,7 +88,7 @@ A continuación, el fichero aquí generado se carga de nuevo en el script 4.1 pa
 
 ***Output***:
 * (Fichero *best_upstream_ligands.tsv* generado en el script 4.1 y que se requiere para el script 4.2)
-* * (Fichero *best_upstream_ligands_filtered.tsv* generado en el script 4.2 y que se requiere para continuar el script 4.1)
+* (Fichero *best_upstream_ligands_filtered.tsv* generado en el script 4.2 y que se requiere para continuar el script 4.1)
 * Fichero *prioritized_tbl_oi_filtered_top.tsv* conteniendo la información de las 66 interacciones de interés predichas para el nicho de *EMT*.
 * Fichero *prioritized_tbl_oi-EMT_low.tsv* conteniendo la información de las 95 interacciones predichas para el nicho pobre en *EMT*.
 * Fichero *prioritized_tbl_oi-Singlets.tsv* conteniendo la información de las 92 interacciones predichas para los singletes en lugar de dobletes.
