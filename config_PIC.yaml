@@ -52,8 +52,8 @@ parameters:
         # NOTE: leave value empty to ignore limit
         min_feat: 323 # minimum number of unique genes detected per cell
         max_feat: 2015 # maximum number of unique genes detected per cell
-        min_count: 660 # minimum number of counts per cell
-        max_count: 4125 # maximum number of counts per cell
+        min_count: 550 # minimum number of counts per cell
+        max_count: 4950 # maximum number of counts per cell
         mit_pct: 20 # minimum percentaje of reads mapping to the mitochondrial genome
         ribo_pct: 40 # minimum percentaje of reads mapping to the ribosomal genome
     seurat_filter: #[OPTIONAL] step 2.1: filter out cells based on positive or negative marker gene(s)
