@@ -87,7 +87,16 @@ dev.off()
 ## Cargamos metadata full
 metadata_full<-read.table("./raw/metadata/final_metadata.tsv", sep = "\t", header = TRUE, row.names = 2)
 dim(metadata_full) #2772 cells 
-
+'
+head(metadata_full)
+           BBrowser_barcodes             Batch Total.count Total.expressed.feature     module      group  condition
+WMC2607521      1_WMC2607521 AB10178_no_Tcells         525                     261  AM_MHC_hi        AMs AM_singlet
+WMC2607522      1_WMC2607522 AB10178_no_Tcells         189                     121 Unassigned Unassigned Unassigned
+WMC2607523      1_WMC2607523 AB10178_no_Tcells         333                     183 Unassigned Unassigned Unassigned
+WMC2607524      1_WMC2607524 AB10178_no_Tcells        1582                     504         AM        AMs AM_singlet
+WMC2607525      1_WMC2607525 AB10178_no_Tcells         507                     258         AM        AMs AM_singlet
+WMC2607526      1_WMC2607526 AB10178_no_Tcells         624                     281         AM        AMs AM_singlet
+'
 for (file in c("AB10171","AB10172","AB10173","AB10174","AB10175","AB10176","AB10177","AB10178")){
   file_df<-read.table(paste("./trimmed/counts/",as.character(file),"_no_Tcells.txt", sep = ""))
   metadata_file<-metadata_full[colnames(file_df),]
