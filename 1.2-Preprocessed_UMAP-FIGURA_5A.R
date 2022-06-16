@@ -66,4 +66,6 @@ median(as.vector(as.matrix(
 591/3 #197 como limite inferior
 591*3 #1773 como límite superior
 
-# y esto mismo aplicado a los tres tipos de fichero editando los nombres del fichero de origen.
+# y esto mismo aplicado a los tres tipos de entidades
+# editando los nombres del fichero de origen.
+                   
