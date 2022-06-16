@@ -8,3 +8,17 @@ cellphonedb method degs_analysis meta.tsv counts_mtx/ human-cellphone_genes-EMTp
 ##
 ## 14 interacciones identificadas con el método de subsampling
 ###############################################
+head -n 5 out_subsampling/relevant_interactions.txt cut -f 1,2,10,13,14
+
+# id_cp_interaction	interacting_pair	annotation_strategy	AMs|EMT_PICs	AMs|EMT_singlet
+# CPI-SS0F1A060D4	PVR_NECTIN3	curated	  0  	0  
+# CPI-SC07BE7830D	SPP1_a4b1 complex	curated	  0	  0
+# CPI-SS02AB0C3E0	SPP1_CD44	I2D,IMEx,InnateDB-All,IntAct	  1  	1
+# CPI-SS0ABC5C1B8	CD74_MIF	I2D,InnateDB-All	  0	  0
+
+## Se muestran algunos de los resultados de cellphone. Se observa que hay una serie de columnas que aportan información de
+## la interacción en sí (id, anotación, genes,etc) y luego otras columnas que indican entre qué células se predice la 
+## interacción (un 0 indica que no se produce la interacción, un 1 indica que sí). Aquí por ejemplo se puede ver
+## cómo se predice el par Spp1-Cd44 para la interacción entre AMs y EMT_PICs ó EMT_singlets, pero ninguna de los otros pares la presenta.
+#### IMPORTANTE: ESTAS DOS COLUMNAS NO SON LAS ÚNICAS QUE HACEN REFERENCIA AL CLUSTER DE INTERÉS, SOLO SE MUESTRA A MODO DESCRIPTIVO.
+#### En el paso 5 se referencian otras columnas que podrían resultar de interés.
