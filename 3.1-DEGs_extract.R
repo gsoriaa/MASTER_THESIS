@@ -83,6 +83,16 @@ for (gene in rownames(DEGs_EMTPICs_EMT)) {
   else {Type<-c(Type,"Down-regulated")}
 }
 DEGs_EMTPICs_EMT$Type<-factor(Type, levels = c("Up-regulated", "Down-regulated"))
+'
+head(DEGs_EMTPICs_EMT)
+# p_val avg_log2FC pct.1 pct.2    p_val_adj         Type
+# Lyz2   4.535575e-42   3.825358 0.965 0.066 5.824132e-38 Up-regulated
+# Chil3  3.784814e-36   2.789321 0.843 0.000 4.860080e-32 Up-regulated
+# Ccl6   6.601848e-29   1.601593 0.713 0.000 8.477433e-25 Up-regulated
+# Ctss   5.188125e-28   1.507657 0.696 0.000 6.662071e-24 Up-regulated
+# Ear2   5.607122e-28   1.507657 0.696 0.000 7.200106e-24 Up-regulated
+# Tmsb4x 1.481568e-24   1.727377 0.948 0.678 1.902482e-20 Up-regulated
+'
 write.table(DEGs_EMTPICs_EMT, "DEGs_EMTPICs_EMT_nofilter.tsv", quote=FALSE, row.names = TRUE, sep = "\t")
 DEGs_EMTPICs_EMT<-dplyr::filter(DEGs_EMTPICs_EMT,
                                  p_val_adj < 0.05 )
