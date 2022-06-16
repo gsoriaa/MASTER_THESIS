@@ -5,8 +5,8 @@ library(openxlsx)
 
 # Búsqueda manual de información de los ligandos de interés en el browser de immgen: 
 # http://rstats.immgen.org/Skyline/skyline.html 
-# Se crea manualmente una columna adicional en el fichero best_upstream_ligands-immgen donde se especifica
-# si el ligando tiene expresión suficiente en la web de immgen o no.
+# Se crea manualmente una columna adicional en el fichero best_upstream_ligands donde se especifica
+# si el ligando tiene expresión suficiente en la web de immgen o no: best_upstream_ligands-immgen.tsv
 ligands =  read.csv("best_upstream_ligands-immgen.tsv", sep = "\t", header = FALSE)
 colnames(ligands) = c("gene", "extra_info")
 out_ligands = ligands[ligands$info == "no expression lung",]$gene ## Se eliminan los ligandos que según immgen no tienen expresión.
