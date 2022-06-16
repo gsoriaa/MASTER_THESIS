@@ -226,3 +226,13 @@ pheatmap(t(manual_prioritization), color = cols, breaks = Breaks,
                         "Priorización global"))
 
 dev.off()
+'
+head(manual_prioritization)
+#                   nichenet_prioritization EMP_general_signature EMP_malignant_signature Promisquity cellphone_predict final_score
+#Spp1--Cd44                       0.9362196                   0.0                       0  0.45454545                 1 1.0000000
+#Lgals3--Itgb1                    0.8228880                   1.0                       0  1.00000000                 0 0.8092018
+#Spp1--Itgb1                      0.9492709                   0.5                       0  1.00000000                 0 0.7797533
+#Tnfsf12--Tnfrsf12a               0.9458264                   0.5                       1  0.09090909                 0 0.7274634
+#Rtn4--Cd44                       0.6347269                   0.5                       1  0.45454545                 0 0.7193867
+#F7--F3                           0.9977706                   0.5                       1  0.00000000                 0 0.7191496                 
+'
