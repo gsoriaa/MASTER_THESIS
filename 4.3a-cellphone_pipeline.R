@@ -71,5 +71,15 @@ cellphone_human_genes$gene =
 write.table(cellphone_human_genes, 
             "human-cellphone_genes-EMTp_x_AM.txt", 
             quote=FALSE, row.names = FALSE, sep = "\t")
+'
+head(cellphone_human_genes)
+#      cluster gene
+#B2M       AMs  B2M
+#CCL5      AMs CCL5
+#SPP1      AMs SPP1
+#FTL1      AMs FTL1
+#CFL1      AMs CFL1
+#LYZ2 EMT_PICs LYZ2
+'
 # Y SE EJECUTA CELLPHONE DESDE EL ENTORNO DE CONDA EN EL TERMINAL 
 # TAL Y COMO SE INDICA EN EL SCRIPT 4.3b
