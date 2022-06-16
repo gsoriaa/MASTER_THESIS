@@ -4,7 +4,7 @@
 ## con el proceso de análisis de bollito
 ## 
 ## ## Desde R:
-## Seurat(v.3.2.3) *WARNING: LA v.4.0 no es compatible con snakemake, por lo que tenemos que instalar la v3 para crear este objeto seurat
+## Seurat(v.3.2.3) *WARNING: LA v.4.0 no es compatible con bollito, por lo que tenemos que instalar la v3 para crear este objeto seurat
 library(Seurat)
 library(SeuratObject)
 library(dplyr)
