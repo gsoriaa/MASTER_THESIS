@@ -85,7 +85,7 @@ for (gene in rownames(DEGs_EMTPICs_EMT)) {
 DEGs_EMTPICs_EMT$Type<-factor(Type, levels = c("Up-regulated", "Down-regulated"))
 '
 head(DEGs_EMTPICs_EMT)
-# p_val avg_log2FC pct.1 pct.2    p_val_adj         Type
+#         p_val        avg_log2FC pct.1 pct.2    p_val_adj         Type
 # Lyz2   4.535575e-42   3.825358 0.965 0.066 5.824132e-38 Up-regulated
 # Chil3  3.784814e-36   2.789321 0.843 0.000 4.860080e-32 Up-regulated
 # Ccl6   6.601848e-29   1.601593 0.713 0.000 8.477433e-25 Up-regulated
@@ -226,6 +226,22 @@ write.table(DEGs_PICs_AM_res, "DEGs_PICs_AM_res.tsv", quote=FALSE, row.names = T
 ## Combino los genes
 combined_DEGs_names = unique(c(TUM_DEGs,AM_DEGs))
 combined_DEGs <- rbind(DEGs_EMTPICs_EMT_res, DEGs_PICs_AM_res)
+
+
+'
+head(combined_DEGs, 10)
+#              p_val avg_log2FC pct.1 pct.2    p_val_adj         Type
+#Lyz2   4.535575e-42  3.8253583 0.965 0.066 5.824132e-38 Up-regulated
+#Chil3  3.784814e-36  2.7893210 0.843 0.000 4.860080e-32 Up-regulated
+#Ccl6   6.601848e-29  1.6015932 0.713 0.000 8.477433e-25 Up-regulated
+#Ctss   5.188125e-28  1.5076568 0.696 0.000 6.662071e-24 Up-regulated
+#Ear2   5.607122e-28  1.5076568 0.696 0.000 7.200106e-24 Up-regulated
+#Tmsb4x 1.481568e-24  1.7273773 0.948 0.678 1.902482e-20 Up-regulated
+#Laptm5 1.639314e-24  1.1934289 0.626 0.000 2.105043e-20 Up-regulated
+#Lpl    4.076515e-22  1.0310269 0.574 0.000 5.234653e-18 Up-regulated
+#Tyrobp 1.582895e-18  0.8687555 0.496 0.000 2.032596e-14 Up-regulated
+#Clec7a 1.583651e-18  0.8824304 0.496 0.000 2.033566e-14 Up-regulated
+'
 
 write.table(combined_DEGs_names, "combined_DEGs_names_res.tsv", quote=FALSE, row.names = F, sep = "\t")
 write.table(combined_DEGs, "combined_res.tsv", quote=FALSE, row.names = T, sep = "\t")
