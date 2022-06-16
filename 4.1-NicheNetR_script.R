@@ -433,7 +433,18 @@ prioritized_tbl_oi = prioritization_tables$prioritization_tbl_ligand_receptor %>
   filter(top_niche == niche) %>% 
   top_n(2, prioritization_score) %>% ungroup() 
 
-# 65 interacciones únicas asocciadas a mi nicho de interés
+# 66 interacciones únicas asocciadas a mi nicho de interés
+
+'
+head(prioritized_tbl_oi)
+#niche		 sender receiver  ligand receptor ligand_receptor prioritization_score top_niche
+#pEMT_rich_niche    AMs EMT_High   Itgal     F11r     Itgal--F11r  0.4683272 pEMT_rich_niche
+#pEMT_rich_niche    AMs EMT_High      F7       F3          F7--F3  0.4677565 pEMT_rich_niche
+#pEMT_rich_niche    AMs EMT_High    F11r     F11r      F11r--F11r  0.4650693 pEMT_rich_niche
+#pEMT_rich_niche    AMs EMT_High Alox5ap    Alox5  Alox5ap--Alox5  0.4640362 pEMT_rich_niche
+#pEMT_rich_niche    AMs EMT_High   Ptprc     Cd44     Ptprc--Cd44  0.4567608 pEMT_rich_niche
+#pEMT_rich_niche    AMs EMT_High   Ptprc      Met      Ptprc--Met  0.4557827 pEMT_rich_niche
+'
 
 write.table(prioritized_tbl_oi, "prioritized_tbl_oi_filtered_top.tsv", quote=FALSE, row.names = FALSE, sep = "\t")
 
@@ -825,7 +836,7 @@ prioritized_tbl_oi =
 # 95 INTERACTIONS LOW
 write.table(prioritized_tbl_oi, "prioritized_tbl_oi-EMT_low.tsv", quote=FALSE, row.names = FALSE, sep = "\t")
 
-## desde lfc_plot de antes, hasta el final, 
+## [...] desde lfc_plot de antes, hasta el final, 
 ## podemos copiar y pegar código y generar las mismas figuras
 ## para mi nicho pobre en EMT
 ## 
@@ -855,6 +866,6 @@ for (cluster in assay_seurat@meta.data$group){
   }
 }
 assay_seurat@meta.data$fake_niches <- fake_niches
-## ....
+## [....]
 ## write.table(prioritized_tbl_oi, "prioritized_tbl_oi-EMT_low.tsv", quote=FALSE, row.names = FALSE, sep = "\t")
 ## 92 singlet interactions
