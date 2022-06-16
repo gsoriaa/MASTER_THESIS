@@ -198,6 +198,7 @@ FINAL_SCORE = range01(FINAL_SCORE)
 Breaks<-c(seq(0,1, length=6)) #set breaks
 
 cols <- rev(brewer.pal(6,"RdBu")) #set color for breaks (rev = reverse)
+# write full pair ranking
 '
 manual_prioritization = data.frame("nichenet_prioritization" = prior_score, 
                                    "EMP_general_signature" = EMP_general_score,
@@ -209,6 +210,7 @@ manual_prioritization = data.frame("nichenet_prioritization" = prior_score,
   arrange(desc(FINAL_SCORE))  
 write.table(manual_prioritization, "final_interaction_ranking.tsv", quote=FALSE, row.names = T, sep = "\t")
 '
+# plot top 30
 manual_prioritization = data.frame("nichenet_prioritization" = prior_score, 
                                    "EMP_general_signature" = EMP_general_score,
                                    "EMP_malignant_signature" = EMP_malignant_score,
