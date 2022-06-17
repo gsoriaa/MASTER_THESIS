@@ -10,6 +10,33 @@ library(topGO)
 library(org.Mm.eg.db) #mus musculus
 library(stringr)
 
+# FUNCTION TO TRANSLATE FROM HUMAN TO MOUSE GENES (EMT_SIGNATURES)
+convertHumantoMouse <- function(x){
+  
+  require("biomaRt")
+  # human = useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl")
+  # mouse = useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl") # these are giving mirror errors
+  human = useEnsembl(biomart = "genes", dataset = "hsapiens_gene_ensembl", host = "https://dec2021.archive.ensembl.org/")
+  mouse = useEnsembl(biomart = "genes", dataset = "mmusculus_gene_ensembl", host = "https://dec2021.archive.ensembl.org/")
+  
+  genesV2 = getLDS(attributes = c("hgnc_symbol"), filters = "hgnc_symbol", values = x , mart = human, attributesL = c("mgi_symbol"), martL = mouse, uniqueRows=T)
+  
+  mousex <- unique(genesV2[, 2]) # unique the 2nd column values
+  
+  human_genes_number <- length(x)
+  mouse_genes_number <- length(mousex)
+  
+  if(human_genes_number != mouse_genes_number){
+    genes_not_trans <- setdiff(x, genesV2$HGNC.symbol)
+    print("These genes could not be translated:")
+    print(genes_not_trans)
+    print(paste("A total number of ",length(genes_not_trans),"genes could not be translated!"),sep=" ")
+  }else{
+    print("All genes were translated successfully!")
+  }
+  
+  return(mousex)
+}
 ###########################1-
 ############################# CARGAR LOS DEGs de EMT_PICs vs. EMT_singlets
 
@@ -183,9 +210,17 @@ malignant_conserved_signature <- as.vector(as.matrix(
 
 length(EMP_conserved_signature) #328 genes en la firma general conservada de EMP
 length(malignant_conserved_signature) #128 genes en la firma conservada específica de célula tumoral
+sum(EMP_conserved_signature %in% genes_full_combined)/328*100 #17 genes
+sum(malignant_conserved_signature %in% genes_full_combined)/128*100 #5 genes, 4.13%
 
-sum(EMP_conserved_signature %in% genes_full_combined)/328*100 #17 genes, 5.18%
-sum(malignant_conserved_signature %in% genes_full_combined)/128*100 #5 genes, 3.9%
+EMP_conserved_signature <- convertHumantoMouse(toupper(EMP_conserved_signature))
+malignant_conserved_signature <- convertHumantoMouse(toupper(malignant_conserved_signature))
+
+length(EMP_conserved_signature) #346 genes en la firma general conservada de EMP
+length(malignant_conserved_signature) #121 genes en la firma conservada específica de célula tumoral
+sum(EMP_conserved_signature %in% genes_full_combined)/346*100 #19 genes, 5.49%
+sum(malignant_conserved_signature %in% genes_full_combined)/121*100 #5 genes, 4.13%
+#  
 #  
 pdf("FIGURA_9-DCOOK_EMP_SIGNATURES-venn.pdf") #FIGURA 9
 x <- list(
