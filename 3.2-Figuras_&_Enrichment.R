@@ -216,8 +216,8 @@ sum(malignant_conserved_signature %in% genes_full_combined)/128*100 #5 genes, 4.
 EMP_conserved_signature <- convertHumantoMouse(toupper(EMP_conserved_signature))
 malignant_conserved_signature <- convertHumantoMouse(toupper(malignant_conserved_signature))
 
-length(EMP_conserved_signature) #346 genes en la firma general conservada de EMP
-length(malignant_conserved_signature) #121 genes en la firma conservada específica de célula tumoral
+length(EMP_conserved_signature) #346 genes en la firma general conservada de EMP (30 no traducidos)
+length(malignant_conserved_signature) #121 genes en la firma conservada específica de célula tumoral (11 no traducidos)
 sum(EMP_conserved_signature %in% genes_full_combined)/346*100 #19 genes, 5.49%
 sum(malignant_conserved_signature %in% genes_full_combined)/121*100 #5 genes, 4.13%
 #  
