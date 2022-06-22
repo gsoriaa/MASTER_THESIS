@@ -26,14 +26,14 @@ shapiro.test(assay_seurat@meta.data$nCount_SCT) # W = 0.93633, p-value < 2.2e-16
 ## DEFINIR EL assay_seurat DE SCT
 DefaultAssay(assay_seurat) <- "SCT"
 # DEFINIR LA COLUMNA DE METADATA QUE SE EMPLEARÁ POR DEFECTO PARA DIFERENCIAR MIS CÉLULAS
-Idents(assay_seurat) = assay_seurat@meta.data$group
+Idents(assay_seurat) <- assay_seurat@meta.data$group
 
 ## IDENTIFICAR LOS GENES MARCADORES QUE DEFINEN CADA UNO DE LOS CLUSTERS DE PICs
 ## FIGURA 6
 MARKER_PICs <- FindAllMarkers(subset(assay_seurat, group %in% c("EMT_PICs", "PROLIF_PICs", "STRESS_PIC")),
                               test.use = "wilcox", group.by = "group")
 dim(MARKER_PICs) #462
-MARKER_PICs = MARKER_PICs %>% filter(p_val_adj < 0.05) %>% filter(abs(avg_log2FC) > 0.45)
+MARKER_PICs <- MARKER_PICs %>% filter(p_val_adj < 0.05) %>% filter(abs(avg_log2FC) > 0.45)
 length(unique(MARKER_PICs$gene)) # 62 genes únicos
 # Están los tres genes definitorios de cada cluster en mi set?
 # 
@@ -45,7 +45,7 @@ stress_genes <- c()
 prolif_genes <- c()
 emt_genes <- c()
 for (gene_id in unique(MARKER_PICs$gene)){
-top_C = MARKER_PICs %>% filter(gene == gene_id) %>% arrange(desc(avg_log2FC)) %>% top_n(1, avg_log2FC)
+top_C <- MARKER_PICs %>% filter(gene == gene_id) %>% arrange(desc(avg_log2FC)) %>% top_n(1, avg_log2FC)
 #ordenar segun la expresion del gen y coger el top 1
 if (top_C$cluster == "STRESS_PIC"){ #asignarlo al cluster que me interese
 stress_genes <- c(stress_genes, top_C$gene)
@@ -159,10 +159,10 @@ dim(DEGs_singlets_TUM) #635
 #|_______________________
 
 ############## Número de genes en cada opción:
-up_DEGs_EMTPICs_EMT = DEGs_EMTPICs_EMT %>% filter(Type == 'Up-regulated') %>% rownames() # 71
-down_DEGs_EMTPICs_EMT = DEGs_EMTPICs_EMT %>% filter(Type == 'Down-regulated') %>% rownames() #5 
-up_DEGs_PICs_AM = DEGs_PICs_AM %>% filter(Type == 'Up-regulated') %>% rownames() #711
-down_DEGs_PICs_AM = DEGs_PICs_AM %>% filter(Type == 'Down-regulated') %>% rownames() #38
+up_DEGs_EMTPICs_EMT <- DEGs_EMTPICs_EMT %>% filter(Type == 'Up-regulated') %>% rownames() # 71
+down_DEGs_EMTPICs_EMT <- DEGs_EMTPICs_EMT %>% filter(Type == 'Down-regulated') %>% rownames() #5 
+up_DEGs_PICs_AM <- DEGs_PICs_AM %>% filter(Type == 'Up-regulated') %>% rownames() #711
+down_DEGs_PICs_AM <- DEGs_PICs_AM %>% filter(Type == 'Down-regulated') %>% rownames() #38
 
 sum(up_DEGs_EMTPICs_EMT %in% up_DEGs_PICs_AM) #0
 sum(down_DEGs_EMTPICs_EMT %in% down_DEGs_PICs_AM) #0
@@ -185,16 +185,16 @@ sum(down_DEGs_EMTPICs_EMT %in% up_DEGs_PICs_AM) #4, 100% AM genes
 # en el PIC:
 #UP-GENES (71 genes)
 #unique up-genes (45 genes)
-unique_up_TUM = up_DEGs_EMTPICs_EMT[up_DEGs_EMTPICs_EMT %in% 
+unique_up_TUM <- up_DEGs_EMTPICs_EMT[up_DEGs_EMTPICs_EMT %in% 
                                       rownames(DEGs_PICs_AM) == 
                                       FALSE]
 
 #Definimos el set de genes eliminados que se asocian a AM erróneamente
-trimmed_genes_TUM = unique_up_TUM[unique_up_TUM %in% 
+trimmed_genes_TUM <- unique_up_TUM[unique_up_TUM %in% 
                                     rownames(DEGs_singlets_AM)]
 
 #filtramos los DEGs:
-TUM_DEGs = rownames(DEGs_EMTPICs_EMT[
+TUM_DEGs <- rownames(DEGs_EMTPICs_EMT[
   rownames(DEGs_EMTPICs_EMT) %in% trimmed_genes_TUM == FALSE,])
 length(TUM_DEGs) #33 genes
 
@@ -202,29 +202,29 @@ length(TUM_DEGs) #33 genes
 #Definimos el set de genes únicos asociados a tumor y sobre-expresados en el PIC:
 #UP-GENES (711 genes)
 #unique up-genes (707 genes)
-unique_up_AM = up_DEGs_PICs_AM[up_DEGs_PICs_AM %in% rownames(DEGs_EMTPICs_EMT) == FALSE]
+unique_up_AM <- up_DEGs_PICs_AM[up_DEGs_PICs_AM %in% rownames(DEGs_EMTPICs_EMT) == FALSE]
 
 #Definimos el set de genes eliminados que se asocian erróneamente a tumor
-trimmed_genes_AM = unique_up_AM[unique_up_AM %in% rownames(DEGs_singlets_TUM)]
+trimmed_genes_AM <- unique_up_AM[unique_up_AM %in% rownames(DEGs_singlets_TUM)]
 
 #filtramos los DEGs:
-AM_DEGs = rownames(DEGs_PICs_AM[rownames(DEGs_PICs_AM) %in% trimmed_genes_AM == FALSE,])
+AM_DEGs <- rownames(DEGs_PICs_AM[rownames(DEGs_PICs_AM) %in% trimmed_genes_AM == FALSE,])
 length(AM_DEGs) #388 genes
 
 sum(TUM_DEGs %in% AM_DEGs) # 30 de los genes son comunes 
-TUM_DEGs = TUM_DEGs[TUM_DEGs %in% up_DEGs_PICs_AM ==FALSE] #elimino los 4 genes que se asocian a AM
-AM_DEGs = AM_DEGs[AM_DEGs %in% up_DEGs_EMTPICs_EMT ==FALSE] #elimino los 26 genes comunes que se asocian a tumor
+TUM_DEGs <- TUM_DEGs[TUM_DEGs %in% up_DEGs_PICs_AM ==FALSE] #elimino los 4 genes que se asocian a AM
+AM_DEGs <- AM_DEGs[AM_DEGs %in% up_DEGs_EMTPICs_EMT ==FALSE] #elimino los 26 genes comunes que se asocian a tumor
 
 length(TUM_DEGs) # 29
 length(AM_DEGs) # 362
 
-DEGs_EMTPICs_EMT_res = DEGs_EMTPICs_EMT[TUM_DEGs,] #DF
+DEGs_EMTPICs_EMT_res <- DEGs_EMTPICs_EMT[TUM_DEGs,] #DF
 write.table(DEGs_EMTPICs_EMT_res, "DEGs_EMTPICs_EMT_res.tsv", quote=FALSE, row.names = TRUE, sep = "\t")
-DEGs_PICs_AM_res = DEGs_PICs_AM[AM_DEGs,] #DF
+DEGs_PICs_AM_res <- DEGs_PICs_AM[AM_DEGs,] #DF
 write.table(DEGs_PICs_AM_res, "DEGs_PICs_AM_res.tsv", quote=FALSE, row.names = TRUE, sep = "\t")
 
 ## Combino los genes
-combined_DEGs_names = unique(c(TUM_DEGs,AM_DEGs))
+combined_DEGs_names <- unique(c(TUM_DEGs,AM_DEGs))
 combined_DEGs <- rbind(DEGs_EMTPICs_EMT_res, DEGs_PICs_AM_res)
 
 
