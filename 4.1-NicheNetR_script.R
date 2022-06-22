@@ -43,7 +43,7 @@ lr_network <- lr_network %>% dplyr::rename(ligand = from, receptor = to) %>%
 ## Traducimos los genes a ratón (la referencia es de humano)
 organism = "mouse"
 if(organism == "mouse"){
-  lr_network = lr_network %>% 
+  lr_network <- lr_network %>% 
     mutate(ligand = convert_human_to_mouse_symbols(ligand), 
            receptor = convert_human_to_mouse_symbols(receptor)) %>% drop_na()
 
@@ -57,7 +57,7 @@ if(organism == "mouse"){
 
 ### Una vez definidos mis datos y la referencia, empieza el análisis:
 ##1- Definimos los nichos de interés
-niches = list(
+niches <- list(
   "pEMT_rich_niche" = list(
     "sender" = c("AMs"), # expresa ligando
     "receiver" = c("EMT_High")), # expresa receptor
@@ -68,7 +68,7 @@ niches = list(
   )
 
 # definimos qué datos nos interesan
-assay_oi = "SCT"
+assay_oi <- "SCT"
 
 ## 2- Se calcula la expresión diferencial entre nichos de interés
 ## tanto para sender como para receiver: Wilcoxon test
@@ -77,20 +77,20 @@ assay_oi = "SCT"
 ### se diseña una dataframe 'mock' donde LFC = 0, y p_v= 1, 
 ### para que su valor no sea significativo
 # DE_sender = calculate_niche_de(seurat_proj assay_seurat %>% subset(features = lr_network$ligand %>% unique()), niches = niches, type = "sender", assay_oi = assay_oi)
-DE_sender = tibble(data.frame(gene = rownames(assay_seurat %>% subset(features = lr_network$ligand %>% unique())), p_val = 1, avg_log2FC = 0, pct.1 = 0, pct.2 = 0, p_val_adj = 1, sender = "AMs", sender_other_niche = "AMs"))
+DE_sender <- tibble(data.frame(gene = rownames(assay_seurat %>% subset(features = lr_network$ligand %>% unique())), p_val = 1, avg_log2FC = 0, pct.1 = 0, pct.2 = 0, p_val_adj = 1, sender = "AMs", sender_other_niche = "AMs"))
 
 # Definimos df diferencial para los receptores (EMT_High & EMT_Low)
-DE_receiver = calculate_niche_de(seurat_obj = assay_seurat %>% 
+DE_receiver <- calculate_niche_de(seurat_obj = assay_seurat %>% 
                                    subset(features = lr_network$receptor %>% unique()), 
                                  niches = niches, type = "receiver", assay_oi = assay_oi)
 
 
 expression_pct = 0.10 # determina el % mínimo de células expresando el gen (0.1 = 10%)
-DE_sender_processed = process_niche_de(DE_table = DE_sender, 
+DE_sender_processed <- process_niche_de(DE_table = DE_sender, 
                                        niches = niches, 
                                        expression_pct = expression_pct, 
                                        type = "sender")
-DE_receiver_processed = process_niche_de(DE_table = DE_receiver, 
+DE_receiver_processed <- process_niche_de(DE_table = DE_receiver, 
                                          niches = niches, 
                                          expression_pct = expression_pct, 
                                          type = "receiver")
@@ -103,7 +103,7 @@ DE_receiver_processed = process_niche_de(DE_table = DE_receiver,
 # aunque se indica en la referencia que el mínimo sería recomendado al ser 
 #   un criterio más restrictivo.
 specificity_score_LR_pairs = "min_lfc"
-DE_sender_receiver = combine_sender_receiver_de(DE_sender_processed, 
+DE_sender_receiver <- combine_sender_receiver_de(DE_sender_processed, 
                                                 DE_receiver_processed, 
                                                 lr_network, 
                                                 specificity_score = specificity_score_LR_pairs)
@@ -159,7 +159,7 @@ expression_pct = 0.10
 
 # Se define el conjunto de genes diana a emplear como los genes DE
 # entre ambos nichos de células 'receiver0: Rico y pobre en EMT
-DE_receiver_targets = calculate_niche_de_targets(seurat_obj = assay_seurat, 
+DE_receiver_targets <- calculate_niche_de_targets(seurat_obj = assay_seurat, 
                                                  niches = niches, 
                                                  lfc_cutoff = lfc_cutoff, 
                                                  expression_pct = expression_pct, 
@@ -175,20 +175,20 @@ DEGs_combined = read.table("./combined_res.tsv")
 DE_receiver_targets = DE_receiver_targets %>% 
   dplyr::filter(gene %in% rownames(DEGs_combined)) #my DEGs
 
-DE_receiver_processed_targets = process_receiver_target_de(DE_receiver_targets = DE_receiver_targets, 
+DE_receiver_processed_targets <- process_receiver_target_de(DE_receiver_targets = DE_receiver_targets, 
                                                            niches = niches, expression_pct = expression_pct, 
                                                            specificity_score = specificity_score_targets)
 # se define una variable de genes como ruido de fondo que
 # comprende TODOS los genes identificados en uno u otro cluster
 # de receiver cells
-background = DE_receiver_processed_targets  %>% pull(target) %>% unique()
-geneset_niche1 = DE_receiver_processed_targets %>% 
+background <- DE_receiver_processed_targets  %>% pull(target) %>% unique()
+geneset_niche1 <- DE_receiver_processed_targets %>% 
   filter(receiver == niches[[1]]$receiver & 
            target_score >= lfc_cutoff & 
            target_significant == 1 & 
            target_present == 1) %>% 
   pull(target) %>% unique()
-geneset_niche2 = DE_receiver_processed_targets %>% 
+geneset_niche2 <- DE_receiver_processed_targets %>% 
   filter(receiver == niches[[2]]$receiver & 
            target_score >= lfc_cutoff & 
            target_significant == 1 & 
@@ -230,7 +230,7 @@ niche_geneset_list = list(
   )
 
 # y se calcula la actividad de ligando sobre genes diana  
-ligand_activities_targets = get_ligand_activities_targets(niche_geneset_list = niche_geneset_list, 
+ligand_activities_targets <- get_ligand_activities_targets(niche_geneset_list = niche_geneset_list, 
                                                           ligand_target_matrix = ligand_target_matrix, 
                                                           top_n_target = top_n_target)
 
