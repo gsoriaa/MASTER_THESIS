@@ -23,7 +23,7 @@ table(assay_seurat@meta.data$group)
 #           103            464            272 
 ##
 ####PLOT
-cell_counts = data.frame(Cluster = 
+cell_counts <- data.frame(Cluster = 
                            c("AMs","EMT_singlet","PROLIF_singlet", 
                              "STRESS_singlet", "EMT_PICs", 
                              "PROLIF_PICs", "STRESS_PICs"),
@@ -41,7 +41,7 @@ barplot(height = cell_counts$Cell_count, names = cell_counts$Cluster,
         main = "Recuento de estados celulares", width = 0.5)
 
 # pie chart PICs
-cell_perc = cell_counts$Cell_count[5:7]/sum(cell_counts$Cell_count[5:7]) * 100
+cell_perc <- cell_counts$Cell_count[5:7]/sum(cell_counts$Cell_count[5:7]) * 100
 pie(cell_perc, labels = paste0(round(cell_perc,2), "%"),
     col = coul[5:7], border = "white", main = "Proporción de dobletes identificados")
 
